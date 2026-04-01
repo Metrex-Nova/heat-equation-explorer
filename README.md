@@ -88,12 +88,34 @@ Everything else is vanilla JS.
 
 ---
 
-## Piecewise phi(x) syntax
+## phi(x) — all types
 
-Use JS ternary operators:
+### Polynomial
+x * (1 - x)                              symmetric, smooth, satisfies BCs
+x**2 * (1 - x)                           skewed, smooth
+x * (1 - x**2)                           asymmetric
+x                                        linear, violates BC at x=1
+1                                        constant, violates both BCs
 
-```
-x < 0.5 ? 0 : 1                         step function
+### Trigonometric
+Math.sin(Math.PI * x)                    single mode, only A1 survives
+Math.sin(2 * Math.PI * x)               single mode, only A2 survives
+Math.sin(3 * Math.PI * x) + Math.sin(5 * Math.PI * x)    two modes, only A3 and A5 survive
+Math.cos(x)                              asymmetric, all An nonzero
+Math.cos(Math.PI * x)                    all An nonzero
+
+### Exponential
+Math.exp(-x)                             decaying, all An nonzero
+Math.exp(x) - 1                          growing, violates BC at x=1
+Math.exp(x * (1 - x))                    peaked at centre, satisfies BCs approximately
+
+### Piecewise — use JS ternary operators
 x < 0.5 ? x : 1 - x                     triangle wave
+x < 0.5 ? 0 : 1                         step function
 x < 0.25 ? 0 : x < 0.75 ? 1 : 0        rectangular pulse
+x < 0.5 ? 2*x : 2*(1-x)                 steeper triangle
+
+### Absolute value / peaked
+Math.abs(x - 0.5)                        V-shape, peaked at centre
+Math.min(x, 1 - x)                       same as triangle wave, different form 0 : x < 0.75 ? 1 : 0        rectangular pulse
 ```
