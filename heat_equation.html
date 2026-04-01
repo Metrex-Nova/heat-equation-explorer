@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Heat Equation Explorer</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/2.27.0/plotly.min.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Courier New', monospace;
+    background: #f7f6f2;
+    color: #1a1a1a;
+    min-height: 100vh;
+    padding: 32px 24px;
+  }
+
+  h1 {
+    font-size: 1.1rem;
+    font-weight: normal;
+    letter-spacing: 0.05em;
+    border-bottom: 1px solid #1a1a1a;
+    padding-bottom: 8px;
+    margin-bottom: 28px;
+  }
+
+  h1 span { font-weight: bold; }
+
+  .inputs {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+    margin-bottom: 28px;
+    max-width: 900px;
+  }
+
+  .field label {
+    display: block;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #555;
+    margin-bottom: 5px;
+  }
+
+  .field input {
+    width: 100%;
+    padding: 7px 10px;
+    border: 1px solid #bbb;
+    background: #fff;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+    outline: none;
+  }
+
+  .field input:focus { border-color: #1a1a1a; }
+  .hint { font-size: 0.68rem; color: #888; margin-top: 4px; }
+
+  .run-row { display: flex; align-items: center; gap: 16px; margin-bottom: 24px; flex-wrap: wrap; }
+
+  button#runBtn {
+    padding: 8px 22px;
+    background: #1a1a1a;
+    color: #f7f6f2;
+    border: none;
+    font-family: 'Courier New', monospace;
+    font-size: 0.85rem;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+  }
+
+  button#runBtn:hover { background: #333; }
+  button#runBtn:disabled { background: #999; cursor: not-allowed; }
+
+  .progress-wrap { flex: 1; max-width: 400px; display: none; }
+  .progress-wrap.visible { display: block; }
+  .progress-label { font-size: 0.7rem; color: #555; margin-bottom: 5px; letter-spacing: 0.04em; }
+  .progress-bar-bg { width: 100%; height: 5px; background: #ddd; }
+  .progress-bar-fill { height: 5px; background: #1a1a1a; width: 0%; transition: width 0.1s linear; }
+
+  .tabs {
+    display: flex;
+    margin-bottom: 28px;
+    border-bottom: 1px solid #ccc;
+  }
+
+  .tab {
+    padding: 8px 20px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.8rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    cursor: pointer;
+    border: 1px solid transparent;
+    border-bottom: none;
+    background: none;
+    color: #888;
+    margin-bottom: -1px;
+  }
+
+  .tab.active { color: #1a1a1a; border-color: #ccc; background: #f7f6f2; font-weight: bold; }
+
+  .panel { display: none; }
+  .panel.active { display: block; }
+
+  #error-plot { width: 100%; height: 420px; }
+
+  .error-table { margin-top: 24px; border-collapse: collapse; font-size: 0.8rem; }
+  .error-table th, .error-table td { padding: 5px 20px 5px 0; text-align: left; border-bottom: 1px solid #eee; }
+  .error-table th { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.07em; color: #666; font-weight: normal; }
+
+  .conv-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 12px; }
+  .surf-box { background: #fff; border: 1px solid #ddd; }
+  .surf-title { font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase; padding: 7px 10px; border-bottom: 1px solid #eee; color: #444; }
+  .surf-plot { width: 100%; height: 280px; }
+</style>
+</head>
+<body>
+
+<h1>heat equation — <span>u<sub>t</sub> = α² u<sub>xx</sub></span> &nbsp;|&nbsp; separation of variables</h1>
+
+<div class="inputs">
+  <div class="field">
+    <label>φ(x) — initial condition</label>
+    <input type="text" id="phi" value="Math.cos(x)" />
+    <div class="hint">JS: Math.sin(x), x*(1-x), Math.exp(-x)</div>
+  </div>
+  <div class="field">
+    <label>Number of Aₙ terms</label>
+    <input type="number" id="nterms" value="10" min="1" max="100" />
+  </div>
+  <div class="field">
+    <label>α (diffusion coeff)</label>
+    <input type="number" id="alpha" value="1.0" step="0.1" min="0.01" />
+  </div>
+  <div class="field">
+    <label>t — for error analysis</label>
+    <input type="number" id="tval" value="0.01" step="0.001" min="0.001" />
+  </div>
+</div>
+
+<div class="run-row">
+  <button id="runBtn" onclick="run()">compute</button>
+  <div class="progress-wrap" id="prog-wrap">
+    <div class="progress-label" id="prog-label">—</div>
+    <div class="progress-bar-bg"><div class="progress-bar-fill" id="prog-fill"></div></div>
+  </div>
+</div>
+
+<div class="tabs">
+  <button class="tab active" onclick="switchTab('error')">error analysis</button>
+  <button class="tab" onclick="switchTab('conv')">convergence graphs</button>
+</div>
+
+<div class="panel active" id="panel-error">
+  <div id="error-plot"></div>
+  <table class="error-table" id="error-table"></table>
+</div>
+
+<div class="panel" id="panel-conv">
+  <div class="conv-grid" id="conv-grid"></div>
+</div>
+
+<script>
+function setProgress(pct, label) {
+  document.getElementById('prog-fill').style.width = pct + '%';
+  document.getElementById('prog-label').textContent = label;
+}
+function showProgress(v) {
+  document.getElementById('prog-wrap').classList.toggle('visible', v);
+}
+function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+function linspace(a, b, n) {
+  return Array.from({length: n}, (_, i) => a + i*(b-a)/(n-1));
+}
+function simpson(f, a, b, n=400) {
+  if (n%2!==0) n++;
+  const h=(b-a)/n; let s=f(a)+f(b);
+  for(let i=1;i<n;i++) s+=f(a+i*h)*(i%2===0?2:4);
+  return s*h/3;
+}
+function makePhi(expr) { return new Function('x', `return ${expr};`); }
+function computeAn(phi, n, L=1) {
+  return (2/L)*simpson(x => phi(x)*Math.sin(n*Math.PI*x/L), 0, L);
+}
+function uPartial(x, t, An, N, alpha, L=1) {
+  let s=0;
+  for(let n=1;n<=N;n++)
+    s += An[n]*Math.exp(-Math.pow(n*Math.PI*alpha/L,2)*t)*Math.sin(n*Math.PI*x/L);
+  return s;
+}
+function l2err(a, b, dx) {
+  let s=0; for(let i=0;i<a.length;i++) s+=(a[i]-b[i])**2*dx; return Math.sqrt(s);
+}
+function switchTab(name) {
+  document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('active',['error','conv'][i]===name));
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById(`panel-${name}`).classList.add('active');
+}
+
+async function run() {
+  const btn = document.getElementById('runBtn');
+  btn.disabled = true;
+  showProgress(true);
+
+  const phiExpr = document.getElementById('phi').value.trim();
+  const N       = parseInt(document.getElementById('nterms').value);
+  const alpha   = parseFloat(document.getElementById('alpha').value);
+  const tval    = parseFloat(document.getElementById('tval').value);
+  const L       = 1.0;
+  const N_ref   = Math.max(N+50, 200);
+
+  let phi;
+  try { phi = makePhi(phiExpr); phi(0.5); }
+  catch(e) { setProgress(0,`error: ${e.message}`); btn.disabled=false; return; }
+
+  // ── step 1: Aₙ coefficients ──────────────────────────────────────────────
+  const An = [0];
+  for (let n=1; n<=N_ref; n++) {
+    An.push(computeAn(phi, n, L));
+    if (n%5===0 || n===N_ref) {
+      setProgress(Math.round(n/N_ref*40), `[tqdm] computing Aₙ  ${n} / ${N_ref}`);
+      await sleep(0);
+    }
+  }
+
+  // ── step 2: error analysis ────────────────────────────────────────────────
+  const xpts  = linspace(0, L, 300);
+  const dx    = xpts[1]-xpts[0];
+  const u_ref = xpts.map(x => uPartial(x, tval, An, N_ref, alpha, L));
+
+  const N_vals=[], errors=[];
+  for (let n=1; n<=N; n++) {
+    const u_n = xpts.map(x => uPartial(x, tval, An, n, alpha, L));
+    N_vals.push(n); errors.push(l2err(u_n, u_ref, dx));
+    setProgress(40+Math.round(n/N*20), `[tqdm] error analysis  ${n} / ${N}`);
+    if (n%3===0) await sleep(0);
+  }
+
+  Plotly.newPlot('error-plot', [{
+    x: N_vals, y: errors,
+    mode: 'lines+markers',
+    marker: {size:6, color:'#1a1a1a'},
+    line: {color:'#1a1a1a', width:1.5},
+    type: 'scatter',
+    text: errors.map(e=>e.toExponential(3)),
+    hovertemplate: 'N=%{x}<br>error=%{text}<extra></extra>'
+  }], {
+    xaxis: {title:'N (terms)', tickmode:'linear', dtick:1, gridcolor:'#eee'},
+    yaxis: {title:'L² error', type:'log', gridcolor:'#eee'},
+    paper_bgcolor:'#f7f6f2', plot_bgcolor:'#fff',
+    font: {family:'Courier New', size:11},
+    margin: {t:20,r:20,b:50,l:70}
+  }, {responsive:true});
+
+  let html=`<tr><th>N</th><th>L² error</th><th>% reduction from N=1</th></tr>`;
+  for(let i=0;i<N_vals.length;i++) {
+    const red = i===0?'—':((errors[0]-errors[i])/errors[0]*100).toFixed(2)+'%';
+    html+=`<tr><td>${N_vals[i]}</td><td>${errors[i].toExponential(6)}</td><td>${red}</td></tr>`;
+  }
+  document.getElementById('error-table').innerHTML = html;
+
+  // ── step 3: surfaces ──────────────────────────────────────────────────────
+  let showNs;
+  if (N<=20) {
+    showNs = Array.from({length:N},(_,i)=>i+1);
+  } else {
+    showNs = Array.from({length:20},(_,i)=>N-19+i);
+  }
+
+  const xs = linspace(0, L, 35);
+  const ts = linspace(0.001, 1.0, 35);
+  const grid = document.getElementById('conv-grid');
+  grid.innerHTML='';
+
+  for (let si=0; si<showNs.length; si++) {
+    const n = showNs[si];
+    setProgress(60+Math.round((si+1)/showNs.length*40),
+      `[tqdm] surface ${si+1} / ${showNs.length}  (N=${n})`);
+    await sleep(0);
+
+    const Z = ts.map(t => xs.map(x => uPartial(x, t, An, n, alpha, L)));
+
+    const div = document.createElement('div');
+    div.className='surf-box';
+    div.innerHTML=`
+      <div class="surf-title">${n===1?'N = 1 — A₁ only':`N = ${n} — A₁ … A${n}`}</div>
+      <div class="surf-plot" id="s${n}"></div>`;
+    grid.appendChild(div);
+
+    Plotly.newPlot(`s${n}`, [{
+      type:'surface', x:xs, y:ts, z:Z,
+      colorscale:'Plasma', showscale:false
+    }], {
+      scene:{
+        xaxis:{title:'x',titlefont:{size:9},tickfont:{size:8}},
+        yaxis:{title:'t',titlefont:{size:9},tickfont:{size:8}},
+        zaxis:{title:'u',titlefont:{size:9},tickfont:{size:8}},
+        camera:{eye:{x:1.5,y:-1.5,z:1}}
+      },
+      paper_bgcolor:'#fff',
+      font:{family:'Courier New',size:9},
+      margin:{t:5,r:5,b:5,l:5}
+    }, {responsive:true});
+  }
+
+  setProgress(100, `done — N = ${showNs[0]} to ${showNs[showNs.length-1]}`);
+  btn.disabled=false;
+}
+</script>
+</body>
+</html>
