@@ -8,7 +8,7 @@ u(0,t) = u(1,t) = 0
 u(x,0) = phi(x)
 ```
 
-No server. No build step. Open `heat_equation.html` in a browser.
+No server. No build step.
 
 ---
 
