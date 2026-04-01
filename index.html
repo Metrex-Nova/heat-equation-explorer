@@ -16,21 +16,14 @@
   }
 
   h1 {
-    font-size: 1.1rem;
-    font-weight: normal;
-    letter-spacing: 0.05em;
-    border-bottom: 1px solid #1a1a1a;
-    padding-bottom: 8px;
-    margin-bottom: 28px;
+    font-size: 1.1rem; font-weight: normal; letter-spacing: 0.05em;
+    border-bottom: 1px solid #1a1a1a; padding-bottom: 8px; margin-bottom: 28px;
   }
   h1 span { font-weight: bold; }
 
   .inputs {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 16px;
-    margin-bottom: 28px;
-    max-width: 1000px;
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px; margin-bottom: 28px; max-width: 1000px;
   }
   .field label {
     display: block; font-size: 0.72rem; letter-spacing: 0.08em;
@@ -68,65 +61,34 @@
   .panel { display: none; }
   .panel.active { display: block; }
 
-  /* plot card */
-  .plot-card {
-    background: #fff;
-    border: 1px solid #ddd;
-    margin-bottom: 20px;
-  }
-  .plot-card-header {
-    padding: 10px 14px 0 14px;
-    border-bottom: 1px solid #eee;
-    padding-bottom: 10px;
-  }
-  .plot-card-title {
-    font-size: 0.78rem;
-    font-weight: bold;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: #1a1a1a;
-    margin-bottom: 4px;
-  }
-  .plot-card-desc {
-    font-size: 0.72rem;
-    color: #666;
-    line-height: 1.55;
-    max-width: 900px;
-  }
+  .plot-card { background: #fff; border: 1px solid #ddd; margin-bottom: 20px; }
+  .plot-card-header { padding: 10px 14px; border-bottom: 1px solid #eee; }
+  .plot-card-title { font-size: 0.78rem; font-weight: bold; letter-spacing: 0.06em; text-transform: uppercase; color: #1a1a1a; margin-bottom: 4px; }
+  .plot-card-desc { font-size: 0.72rem; color: #666; line-height: 1.55; max-width: 960px; }
+
   .plot-full { width: 100%; height: 380px; }
   .plot-med  { width: 100%; height: 320px; }
-  .plot-sm   { width: 100%; height: 260px; }
 
   .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
 
-  /* error table */
-  .error-table { margin-top: 4px; border-collapse: collapse; font-size: 0.78rem; width: 100%; }
-  .error-table th, .error-table td {
-    padding: 5px 16px 5px 0; text-align: left; border-bottom: 1px solid #eee;
-  }
-  .error-table th {
-    font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.07em; color: #666; font-weight: normal;
-  }
+  .error-table { border-collapse: collapse; font-size: 0.78rem; width: 100%; }
+  .error-table th, .error-table td { padding: 5px 14px 5px 0; text-align: left; border-bottom: 1px solid #eee; }
+  .error-table th { font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.07em; color: #666; font-weight: normal; }
   .error-table tr:hover td { background: #f9f9f7; }
 
-  /* 2d convergence grid */
-  .twod-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 12px;
-  }
-  .twod-box { background: #fff; border: 1px solid #ddd; }
-  .twod-header { padding: 8px 10px; border-bottom: 1px solid #eee; }
-  .twod-title { font-size: 0.72rem; font-weight: bold; letter-spacing: 0.05em; text-transform: uppercase; color: #1a1a1a; }
-  .twod-meta  { font-size: 0.67rem; color: #888; margin-top: 2px; }
-  .twod-plot  { width: 100%; height: 220px; }
+  /* 2D per-N: one per row, full width */
+  .twod-box { background: #fff; border: 1px solid #ddd; margin-bottom: 12px; }
+  .twod-header { padding: 8px 12px; border-bottom: 1px solid #eee; }
+  .twod-title { font-size: 0.74rem; font-weight: bold; letter-spacing: 0.05em; text-transform: uppercase; color: #1a1a1a; }
+  .twod-meta  { font-size: 0.67rem; color: #777; margin-top: 3px; }
+  .twod-plot  { width: 100%; height: 240px; }
 
-  /* 3d grid */
+  /* 3D per-N grid */
   .conv-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 12px; }
   .surf-box { background: #fff; border: 1px solid #ddd; }
   .surf-header { padding: 8px 10px; border-bottom: 1px solid #eee; }
   .surf-title { font-size: 0.72rem; font-weight: bold; letter-spacing: 0.05em; text-transform: uppercase; color: #1a1a1a; }
-  .surf-meta  { font-size: 0.67rem; color: #888; margin-top: 2px; }
+  .surf-meta  { font-size: 0.67rem; color: #777; margin-top: 2px; }
   .surf-plot  { width: 100%; height: 280px; }
 </style>
 </head>
@@ -168,20 +130,13 @@
   <button class="tab" onclick="switchTab('threed')">3d plots</button>
 </div>
 
-<!-- ══════════════════════════════════════════════════════════════════════════ -->
 <!-- ERROR TAB -->
-<!-- ══════════════════════════════════════════════════════════════════════════ -->
 <div class="panel active" id="panel-error">
 
   <div class="plot-card">
     <div class="plot-card-header">
       <div class="plot-card-title">solution u(x, t) — all N overlaid</div>
-      <div class="plot-card-desc" id="desc-sol-error">
-        Each line is the partial sum solution u(x,t) using N terms, evaluated at the chosen t.
-        Lighter gray = fewer terms (N=1), black = more terms, dashed black = reference solution (N_ref terms).
-        Lines converging toward the reference shows the series is working.
-        Hover over any line to see its N value and exact u at that x.
-      </div>
+      <div class="plot-card-desc" id="desc-sol-error">—</div>
     </div>
     <div class="plot-full" id="sol-plot-error"></div>
   </div>
@@ -191,10 +146,10 @@
       <div class="plot-card-header">
         <div class="plot-card-title">L² error vs N</div>
         <div class="plot-card-desc">
-          L² error = √∫(u_N − u_ref)² dx, integrated over x ∈ [0,1] at fixed t.
-          Measures the average error across the entire domain.
+          L² error = √∫(u_N − u_ref)² dx over x∈[0,1] at fixed t.
+          Measures average error across the whole domain.
           A steep drop means each new term contributes significantly.
-          A flat section means those terms have negligible contribution at this t.
+          Flat section means those terms are negligible at this t — try a smaller t to see more variation.
         </div>
       </div>
       <div class="plot-med" id="l2-plot"></div>
@@ -203,9 +158,10 @@
       <div class="plot-card-header">
         <div class="plot-card-title">L∞ error vs N (max pointwise)</div>
         <div class="plot-card-desc">
-          L∞ error = max over x of |u_N(x) − u_ref(x)|. This is the worst-case error at any single point.
-          L∞ is stricter than L² — a solution can have low L² error but a spike somewhere that L∞ catches.
-          Compare with L² plot: if both drop at the same rate, error is uniformly distributed across x.
+          L∞ error = max over x of |u_N(x) − u_ref(x)|. Worst-case error at any single point.
+          Stricter than L² — catches localised spikes that L² averages away.
+          If L² and L∞ drop at the same rate, error is evenly spread across x (smooth φ).
+          If L∞ drops slower, there is a spike somewhere — look at the pointwise error plot.
         </div>
       </div>
       <div class="plot-med" id="linf-plot"></div>
@@ -216,10 +172,10 @@
     <div class="plot-card-header">
       <div class="plot-card-title">absolute pointwise error |u_N(x) − u_ref(x)| over x</div>
       <div class="plot-card-desc">
-        Each line shows the error at every x for a given N, on a log scale.
-        The sharp dips to near-zero are points where u_N and u_ref happen to cross (difference = 0, log → −∞).
-        The spike at x=0 and x=1 going to 10⁻²¹ is the boundary condition being satisfied exactly (sin(nπ·0) = sin(nπ·1) = 0).
-        The overall level of each line dropping as N increases confirms convergence.
+        Each line = error at every x for one N, on a log scale. Light gray = N=1, black = N=max.
+        Sharp dips to near-zero are where u_N and u_ref cross (difference = 0, log→−∞).
+        Spikes at x=0 and x=1 collapsing to 10⁻²¹ = boundary condition satisfied exactly (sin(nπ·0)=sin(nπ·1)=0).
+        Overall level of each line dropping as N increases confirms convergence across the whole domain.
       </div>
     </div>
     <div class="plot-full" id="abs-err-plot"></div>
@@ -229,9 +185,8 @@
     <div class="plot-card-header">
       <div class="plot-card-title">error table</div>
       <div class="plot-card-desc">
-        Both L² and L∞ error shown as absolute values (not percentages).
-        Reduction columns show how much error has been eliminated compared to the N=1 approximation.
-        This is an absolute reduction: error(N=1) − error(N), so units are the same as the error itself.
+        L² and L∞ errors as absolute values. Reduction = error(N=1) − error(N), same units as error.
+        u_max and u_min show the range of the N-term solution — confirms whether the solution shape is physically reasonable.
       </div>
     </div>
     <div style="padding: 12px 14px;">
@@ -241,19 +196,16 @@
 
 </div>
 
-<!-- ══════════════════════════════════════════════════════════════════════════ -->
 <!-- 2D TAB -->
-<!-- ══════════════════════════════════════════════════════════════════════════ -->
 <div class="panel" id="panel-twod">
 
   <div class="plot-card">
     <div class="plot-card-header">
       <div class="plot-card-title">φ(x) vs u(x, t) — initial condition vs evolved solution</div>
       <div class="plot-card-desc">
-        Dotted line: φ(x), the initial temperature distribution at t=0.
-        Solid black: u(x,t) at the chosen t using all N terms. Dashed: reference.
-        The gap between φ(x) and u(x,t) shows how much the heat has diffused by time t.
-        At small t the two lines are close; at large t u(x,t) flattens toward zero.
+        Dotted = φ(x), the initial temperature at t=0. Solid = u(x,t) at chosen t using all N terms. Dashed = reference.
+        The gap between φ(x) and u(x,t) shows how much heat has diffused by time t.
+        At small t the lines are close; at large t u(x,t) flattens toward zero as heat dissipates.
       </div>
     </div>
     <div class="plot-full" id="ic-vs-sol"></div>
@@ -263,10 +215,11 @@
     <div class="plot-card-header">
       <div class="plot-card-title">Aₙ coefficient magnitude</div>
       <div class="plot-card-desc">
-        |Aₙ| on a log scale. Each Aₙ = 2∫φ(x)sin(nπx)dx is the weight of the n-th mode in the solution.
-        Fast decay → series converges quickly, few terms needed.
-        Slow decay (shallow slope) → slow convergence, many terms needed.
-        Zero Aₙ for even n means φ(x) is symmetric about x=0.5.
+        |Aₙ| = |2∫φ(x)sin(nπx)dx| on a log scale. Weight of the n-th mode in the series.
+        Fast decay (steep slope) → series converges in few terms.
+        Slow decay (shallow slope) → many terms needed.
+        Zero coefficients for even n means φ(x) is symmetric about x=0.5.
+        The slope approximates the convergence rate: slope ≈ −p means |Aₙ| ~ 1/nᵖ.
       </div>
     </div>
     <div class="plot-med" id="an-plot"></div>
@@ -274,24 +227,18 @@
 
   <div class="plot-card">
     <div class="plot-card-header">
-      <div class="plot-card-title">solution convergence — each N as individual plot</div>
-      <div class="plot-card-desc" id="twod-grid-desc">
-        Each panel shows u(x,t) using exactly N terms (gray), alongside the reference solution (dashed black).
-        The u_max and u_min values shown in each panel are the range of the N-term solution at this t.
-        As N increases, the gray line should overlap the dashed reference more closely.
-      </div>
+      <div class="plot-card-title">solution convergence — one plot per N</div>
+      <div class="plot-card-desc" id="twod-grid-desc">—</div>
     </div>
-    <div style="padding: 12px;">
-      <div class="twod-grid" id="twod-grid"></div>
-    </div>
+    <div style="padding: 12px 14px;" id="twod-grid"></div>
   </div>
 
   <div class="plot-card">
     <div class="plot-card-header">
       <div class="plot-card-title">absolute pointwise error — each N as separate line</div>
       <div class="plot-card-desc">
-        Same as in the error analysis tab but here for reference alongside the 2D solution plots.
-        Hover to see exact error at any x for any N.
+        Same as in the error analysis tab. Shown here for direct comparison alongside the solution plots above.
+        Hover to read exact error at any x for any N.
       </div>
     </div>
     <div class="plot-full" id="abs-err-2d"></div>
@@ -299,19 +246,17 @@
 
 </div>
 
-<!-- ══════════════════════════════════════════════════════════════════════════ -->
 <!-- 3D TAB -->
-<!-- ══════════════════════════════════════════════════════════════════════════ -->
 <div class="panel" id="panel-threed">
 
   <div class="plot-card">
     <div class="plot-card-header">
       <div class="plot-card-title">full solution surface u(x, t) — N terms</div>
       <div class="plot-card-desc">
-        3D surface of u(x,t) over x ∈ [0,1] and t ∈ [0.001, 1], built using all N terms.
-        The front edge (small t) approximates the initial condition φ(x).
-        The surface flattens toward zero as t increases — heat diffusing away.
-        Rotate by dragging. The color encodes u value (Plasma colormap: dark = low, bright = high).
+        3D surface of u(x,t) over x∈[0,1], t∈[0.001,1], using all N terms.
+        Front edge (small t) approximates φ(x). Surface flattens toward zero as t increases.
+        Color = Plasma colormap: dark purple = low u, bright yellow = high u.
+        Rotate by click-drag. Hover for exact (x, t, u) values.
       </div>
     </div>
     <div class="plot-full" id="sol-plot-3d"></div>
@@ -320,14 +265,9 @@
   <div class="plot-card">
     <div class="plot-card-header">
       <div class="plot-card-title">convergence surfaces — one per N</div>
-      <div class="plot-card-desc" id="threed-grid-desc">
-        Each panel is the full u(x,t) surface built with exactly N terms.
-        Early panels (small N) may show rippling or incorrect shape near t≈0 where convergence is slowest.
-        Later panels should match the full solution above.
-        The L² error and u_max values shown under each title confirm how close each surface is.
-      </div>
+      <div class="plot-card-desc" id="threed-grid-desc">—</div>
     </div>
-    <div style="padding: 12px;">
+    <div style="padding: 12px;" id="conv-grid-wrap">
       <div class="conv-grid" id="conv-grid"></div>
     </div>
   </div>
@@ -335,61 +275,82 @@
 </div>
 
 <script>
-// ── utils ────────────────────────────────────────────────────────────────────
+// ── utils ─────────────────────────────────────────────────────────────────
 function setProgress(pct, label) {
   document.getElementById('prog-fill').style.width = pct + '%';
   document.getElementById('prog-label').textContent = label;
 }
 function showProgress(v) { document.getElementById('prog-wrap').classList.toggle('visible', v); }
 function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
-function linspace(a, b, n) { return Array.from({length:n},(_,i)=>a+i*(b-a)/(n-1)); }
-function arrMax(a) { return Math.max(...a); }
-function arrMin(a) { return Math.min(...a); }
+function linspace(a, b, n) { return Array.from({length:n}, (_,i) => a + i*(b-a)/(n-1)); }
+function arrMax(a) { return a.reduce((m,v) => v>m?v:m, -Infinity); }
+function arrMin(a) { return a.reduce((m,v) => v<m?v:m,  Infinity); }
 
 function simpson(f, a, b, n=400) {
-  if(n%2!==0) n++;
+  if (n%2!==0) n++;
   const h=(b-a)/n; let s=f(a)+f(b);
-  for(let i=1;i<n;i++) s+=f(a+i*h)*(i%2===0?2:4);
+  for (let i=1;i<n;i++) s += f(a+i*h)*(i%2===0?2:4);
   return s*h/3;
 }
 function makePhi(expr) { return new Function('x', `return ${expr};`); }
 function computeAn(phi, n, L=1) {
-  return (2/L)*simpson(x=>phi(x)*Math.sin(n*Math.PI*x/L), 0, L);
+  return (2/L)*simpson(x => phi(x)*Math.sin(n*Math.PI*x/L), 0, L);
 }
 function uPartial(x, t, An, N, alpha, L=1) {
   let s=0;
-  for(let n=1;n<=N;n++)
-    s+=An[n]*Math.exp(-Math.pow(n*Math.PI*alpha/L,2)*t)*Math.sin(n*Math.PI*x/L);
+  for (let n=1;n<=N;n++)
+    s += An[n]*Math.exp(-Math.pow(n*Math.PI*alpha/L,2)*t)*Math.sin(n*Math.PI*x/L);
   return s;
 }
 function l2err(a, b, dx) {
-  let s=0; for(let i=0;i<a.length;i++) s+=(a[i]-b[i])**2*dx; return Math.sqrt(s);
+  let s=0; for (let i=0;i<a.length;i++) s+=(a[i]-b[i])**2*dx; return Math.sqrt(s);
 }
 function linfErr(a, b) {
-  let m=0; for(let i=0;i<a.length;i++) m=Math.max(m,Math.abs(a[i]-b[i])); return m;
+  let m=0; for (let i=0;i<a.length;i++) m=Math.max(m,Math.abs(a[i]-b[i])); return m;
 }
 function termColor(i, total) {
   const v=Math.round(200-(i/Math.max(total-1,1))*180); return `rgb(${v},${v},${v})`;
 }
-function fmt(v) { return v.toExponential(3); }
 
 function switchTab(name) {
-  document.querySelectorAll('.tab').forEach((t,i)=>
-    t.classList.toggle('active',['error','twod','threed'][i]===name));
-  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach((t,i) =>
+    t.classList.toggle('active', ['error','twod','threed'][i]===name));
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
   document.getElementById(`panel-${name}`).classList.add('active');
 }
 
-const PLOTLY_LAYOUT_BASE = {
+// track all plot IDs so we can purge them before re-render
+let activePlotIds = [];
+function safePlot(id, traces, layout, config={responsive:true}) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  try { Plotly.purge(el); } catch(e) {}
+  activePlotIds.push(id);
+  Plotly.newPlot(id, traces, layout, config);
+}
+
+const BASE = {
   paper_bgcolor:'#fff', plot_bgcolor:'#fff',
   font:{family:'Courier New', size:11},
   legend:{font:{size:9}},
 };
 
-// ── main ─────────────────────────────────────────────────────────────────────
+function N_all_idx(N_vals, N) {
+  const idx=N_vals.indexOf(N); return idx>=0?idx:N_vals.length-1;
+}
+
+// ── main ──────────────────────────────────────────────────────────────────
 async function run() {
-  const btn=document.getElementById('runBtn');
-  btn.disabled=true; showProgress(true);
+  const btn = document.getElementById('runBtn');
+  btn.disabled = true;
+  showProgress(true);
+
+  // purge all previous plots to free WebGL contexts
+  for (const id of activePlotIds) {
+    const el = document.getElementById(id);
+    if (el) try { Plotly.purge(el); } catch(e) {}
+  }
+  activePlotIds = [];
 
   const phiExpr = document.getElementById('phi').value.trim();
   const N       = parseInt(document.getElementById('nterms').value);
@@ -402,269 +363,277 @@ async function run() {
   try { phi=makePhi(phiExpr); phi(0.5); }
   catch(e) { setProgress(0,`error: ${e.message}`); btn.disabled=false; return; }
 
-  // coefficients
+  // ── coefficients ─────────────────────────────────────────────────────────
   const An=[0];
-  for(let n=1;n<=N_ref;n++) {
+  for (let n=1;n<=N_ref;n++) {
     An.push(computeAn(phi,n,L));
-    if(n%5===0||n===N_ref) {
+    if (n%5===0||n===N_ref) {
       setProgress(Math.round(n/N_ref*30), `[tqdm] Aₙ  ${n} / ${N_ref}`);
       await sleep(0);
     }
   }
 
-  // grids
-  const xpts  = linspace(0,L,300);
+  // ── x grid & errors ───────────────────────────────────────────────────────
+  const xpts  = linspace(0, L, 300);
   const dx    = xpts[1]-xpts[0];
-  const u_ref = xpts.map(x=>uPartial(x,tval,An,N_ref,alpha,L));
-  const phi_x = xpts.map(x=>phi(x));
+  const u_ref = xpts.map(x => uPartial(x,tval,An,N_ref,alpha,L));
+  const phi_x = xpts.map(x => phi(x));
+
+  // fixed y-axis bounds from reference so all plots share the same scale
+  const yMin = Math.min(arrMin(u_ref), arrMin(phi_x));
+  const yMax = Math.max(arrMax(u_ref), arrMax(phi_x));
+  const yPad = (yMax-yMin)*0.1 || 0.1;
+  const yRange = [yMin-yPad, yMax+yPad];
 
   const N_vals=[], l2s=[], linfs=[], u_all=[], abserr_all=[];
-  for(let n=1;n<=N;n++) {
-    const u_n=xpts.map(x=>uPartial(x,tval,An,n,alpha,L));
-    const abs=u_n.map((v,i)=>Math.abs(v-u_ref[i]));
+  for (let n=1;n<=N;n++) {
+    const u_n = xpts.map(x => uPartial(x,tval,An,n,alpha,L));
+    const abs  = u_n.map((v,i) => Math.abs(v-u_ref[i]));
     N_vals.push(n); l2s.push(l2err(u_n,u_ref,dx));
     linfs.push(linfErr(u_n,u_ref)); u_all.push(u_n); abserr_all.push(abs);
     setProgress(30+Math.round(n/N*20), `[tqdm] errors  ${n} / ${N}`);
-    if(n%3===0) await sleep(0);
+    if (n%3===0) await sleep(0);
   }
 
-  // update descriptions with actual values
+  // update dynamic descriptions
   document.getElementById('desc-sol-error').textContent =
-    `Each line is u(x, t=${tval}) using N terms. Light gray = N=1, dark = N=${N}, dashed = reference (${N_ref} terms). ` +
-    `u_ref range: [${arrMin(u_ref).toFixed(4)}, ${arrMax(u_ref).toFixed(4)}]. ` +
-    `Hover any line for exact N and u value.`;
+    `Each line = u(x, t=${tval}) using N terms. Light gray = N=1, darkest = N=${N}, dashed = reference (${N_ref} terms). ` +
+    `u_ref range: [${arrMin(u_ref).toFixed(4)}, ${arrMax(u_ref).toFixed(4)}]. Hover for exact values.`;
 
-  // ── ERROR TAB ─────────────────────────────────────────────────────────────
+  document.getElementById('twod-grid-desc').textContent =
+    `Each panel shows u(x, t=${tval}) for exactly N terms (gray) vs reference (dashed black). ` +
+    `u_max, u_min, and L² error shown in each header. x-axis fixed to [0,1], y-axis fixed to ` +
+    `[${(yMin-yPad).toFixed(3)}, ${(yMax+yPad).toFixed(3)}] across all panels for fair comparison.`;
 
-  // solution overlay
-  Plotly.newPlot('sol-plot-error',
-    [...u_all.map((u,i)=>({
+  // ══════════════════════════════════════════════════════════════════════════
+  // ERROR TAB
+  // ══════════════════════════════════════════════════════════════════════════
+
+  safePlot('sol-plot-error',
+    [...u_all.map((u,i) => ({
       x:xpts, y:u, mode:'lines', name:`N=${N_vals[i]}`,
-      line:{color:termColor(i,N),width:1.2},
+      line:{color:termColor(i,N), width:1.2},
       hovertemplate:`N=${N_vals[i]}<br>x=%{x:.3f}<br>u=%{y:.6f}<extra></extra>`
     })),
-    {x:xpts,y:u_ref,mode:'lines',name:`reference (N=${N_ref})`,
+    {x:xpts, y:u_ref, mode:'lines', name:`reference (N=${N_ref})`,
      line:{color:'#1a1a1a',width:2,dash:'dash'},
      hovertemplate:`reference<br>x=%{x:.3f}<br>u=%{y:.6f}<extra></extra>`}],
-    {...PLOTLY_LAYOUT_BASE,
-     xaxis:{title:'x',gridcolor:'#eee'},
-     yaxis:{title:`u(x, t=${tval})`,gridcolor:'#eee'},
-     margin:{t:10,r:20,b:50,l:70}},{responsive:true});
+    {...BASE, xaxis:{title:'x',range:[0,1],gridcolor:'#eee'},
+     yaxis:{title:`u(x, t=${tval})`,range:yRange,gridcolor:'#eee'},
+     margin:{t:10,r:20,b:50,l:70}});
 
-  // L2
-  Plotly.newPlot('l2-plot',[{
-    x:N_vals,y:l2s,mode:'lines+markers',
-    marker:{size:6,color:'#1a1a1a'},line:{color:'#1a1a1a',width:1.5},
+  safePlot('l2-plot', [{
+    x:N_vals, y:l2s, mode:'lines+markers',
+    marker:{size:6,color:'#1a1a1a'}, line:{color:'#1a1a1a',width:1.5},
     hovertemplate:'N=%{x}<br>L²=%{y:.4e}<extra></extra>'
-  }],{...PLOTLY_LAYOUT_BASE,
+  }], {...BASE,
     xaxis:{title:'N (terms)',tickmode:'linear',dtick:1,gridcolor:'#eee'},
     yaxis:{title:'L² error',type:'log',gridcolor:'#eee'},
-    margin:{t:10,r:20,b:50,l:70}},{responsive:true});
+    margin:{t:10,r:20,b:50,l:70}});
 
-  // Linf
-  Plotly.newPlot('linf-plot',[{
-    x:N_vals,y:linfs,mode:'lines+markers',
-    marker:{size:6,color:'#555'},line:{color:'#555',width:1.5},
+  safePlot('linf-plot', [{
+    x:N_vals, y:linfs, mode:'lines+markers',
+    marker:{size:6,color:'#555'}, line:{color:'#555',width:1.5},
     hovertemplate:'N=%{x}<br>L∞=%{y:.4e}<extra></extra>'
-  }],{...PLOTLY_LAYOUT_BASE,
+  }], {...BASE,
     xaxis:{title:'N (terms)',tickmode:'linear',dtick:1,gridcolor:'#eee'},
     yaxis:{title:'L∞ error',type:'log',gridcolor:'#eee'},
-    margin:{t:10,r:20,b:50,l:70}},{responsive:true});
+    margin:{t:10,r:20,b:50,l:70}});
 
-  // abs err over x
-  Plotly.newPlot('abs-err-plot',
-    abserr_all.map((abs,i)=>({
-      x:xpts,y:abs,mode:'lines',name:`N=${N_vals[i]}`,
+  safePlot('abs-err-plot',
+    abserr_all.map((abs,i) => ({
+      x:xpts, y:abs, mode:'lines', name:`N=${N_vals[i]}`,
       line:{color:termColor(i,N),width:1.2},
       hovertemplate:`N=${N_vals[i]}<br>x=%{x:.3f}<br>|err|=%{y:.3e}<extra></extra>`
     })),
-    {...PLOTLY_LAYOUT_BASE,
-     xaxis:{title:'x',gridcolor:'#eee'},
+    {...BASE,
+     xaxis:{title:'x',range:[0,1],gridcolor:'#eee'},
      yaxis:{title:'| u_N − u_ref |',type:'log',gridcolor:'#eee'},
-     margin:{t:10,r:20,b:50,l:70}},{responsive:true});
+     margin:{t:10,r:20,b:50,l:70}});
 
   // table
   let html=`<tr>
     <th>N</th><th>L² error</th><th>L∞ error</th>
     <th>L² reduction from N=1</th><th>L∞ reduction from N=1</th>
-    <th>u_max at x∈[0,1]</th><th>u_min at x∈[0,1]</th>
+    <th>u_max</th><th>u_min</th>
   </tr>`;
-  for(let i=0;i<N_vals.length;i++){
-    const rl2   = i===0?'—':(l2s[0]-l2s[i]).toExponential(4);
-    const rlinf = i===0?'—':(linfs[0]-linfs[i]).toExponential(4);
-    const umax  = arrMax(u_all[i]).toFixed(5);
-    const umin  = arrMin(u_all[i]).toFixed(5);
+  for (let i=0;i<N_vals.length;i++) {
+    const rl2  = i===0?'—':(l2s[0]-l2s[i]).toExponential(4);
+    const rlif = i===0?'—':(linfs[0]-linfs[i]).toExponential(4);
     html+=`<tr>
       <td>${N_vals[i]}</td>
-      <td>${l2s[i].toExponential(5)}</td>
-      <td>${linfs[i].toExponential(5)}</td>
-      <td>${rl2}</td><td>${rlinf}</td>
-      <td>${umax}</td><td>${umin}</td>
+      <td>${l2s[i].toExponential(5)}</td><td>${linfs[i].toExponential(5)}</td>
+      <td>${rl2}</td><td>${rlif}</td>
+      <td>${arrMax(u_all[i]).toFixed(5)}</td><td>${arrMin(u_all[i]).toFixed(5)}</td>
     </tr>`;
   }
-  document.getElementById('error-table').innerHTML=html;
+  document.getElementById('error-table').innerHTML = html;
 
-  // ── 2D TAB ────────────────────────────────────────────────────────────────
-  setProgress(52,'building 2D plots...');
+  // ══════════════════════════════════════════════════════════════════════════
+  // 2D TAB
+  // ══════════════════════════════════════════════════════════════════════════
+  setProgress(52, 'building 2D plots...');
   await sleep(0);
 
-  // IC vs solution
-  Plotly.newPlot('ic-vs-sol',[
-    {x:xpts,y:phi_x,mode:'lines',name:'φ(x) — t=0',
+  safePlot('ic-vs-sol', [
+    {x:xpts, y:phi_x, mode:'lines', name:'φ(x) — t=0',
      line:{color:'#aaa',width:1.5,dash:'dot'},
      hovertemplate:`φ(x)<br>x=%{x:.3f}<br>value=%{y:.6f}<extra></extra>`},
-    {x:xpts,y:u_all[N_all_idx(N_vals,N)],mode:'lines',name:`u(x, t=${tval}), N=${N}`,
+    {x:xpts, y:u_all[N_all_idx(N_vals,N)], mode:'lines', name:`u(x,t=${tval}), N=${N}`,
      line:{color:'#1a1a1a',width:2},
-     hovertemplate:`u (N=${N})<br>x=%{x:.3f}<br>u=%{y:.6f}<extra></extra>`},
-    {x:xpts,y:u_ref,mode:'lines',name:`reference`,
+     hovertemplate:`u(N=${N})<br>x=%{x:.3f}<br>u=%{y:.6f}<extra></extra>`},
+    {x:xpts, y:u_ref, mode:'lines', name:'reference',
      line:{color:'#888',width:1.5,dash:'dash'},
      hovertemplate:`reference<br>x=%{x:.3f}<br>u=%{y:.6f}<extra></extra>`}
-  ],{...PLOTLY_LAYOUT_BASE,
-    xaxis:{title:'x',gridcolor:'#eee'},
+  ], {...BASE,
+    xaxis:{title:'x',range:[0,1],gridcolor:'#eee'},
     yaxis:{title:'value',gridcolor:'#eee'},
-    margin:{t:10,r:20,b:50,l:60}},{responsive:true});
+    margin:{t:10,r:20,b:50,l:60}});
 
-  // An magnitude
-  const ns=Array.from({length:N},(_,i)=>i+1);
-  Plotly.newPlot('an-plot',[{
-    x:ns, y:ns.map(n=>Math.abs(An[n])),
+  safePlot('an-plot', [{
+    x: Array.from({length:N},(_,i)=>i+1),
+    y: Array.from({length:N},(_,i)=>Math.abs(An[i+1])),
     mode:'lines+markers',
-    marker:{size:6,color:'#1a1a1a'},
-    line:{color:'#1a1a1a',width:1.5},
+    marker:{size:6,color:'#1a1a1a'}, line:{color:'#1a1a1a',width:1.5},
     hovertemplate:'n=%{x}<br>|Aₙ|=%{y:.5e}<extra></extra>'
-  }],{...PLOTLY_LAYOUT_BASE,
+  }], {...BASE,
     xaxis:{title:'n',tickmode:'linear',dtick:1,gridcolor:'#eee'},
     yaxis:{title:'|Aₙ|',type:'log',gridcolor:'#eee'},
-    margin:{t:10,r:20,b:50,l:70}},{responsive:true});
+    margin:{t:10,r:20,b:50,l:70}});
 
-  // 2D individual plots per N
-  const twodGrid=document.getElementById('twod-grid');
-  twodGrid.innerHTML='';
-  for(let ni=0;ni<N_vals.length;ni++){
-    const n   = N_vals[ni];
-    const u_n = u_all[ni];
+  // 2D per-N: one per row, full width, fixed axes
+  const twodGrid = document.getElementById('twod-grid');
+  twodGrid.innerHTML = '';
+  for (let ni=0; ni<N_vals.length; ni++) {
+    const n    = N_vals[ni];
+    const u_n  = u_all[ni];
     const umax = arrMax(u_n).toFixed(5);
     const umin = arrMin(u_n).toFixed(5);
     const l2   = l2s[ni].toExponential(3);
 
-    setProgress(52+Math.round((ni+1)/N*15), `[tqdm] 2D plot ${ni+1} / ${N}`);
+    setProgress(52+Math.round((ni+1)/N*13), `[tqdm] 2D plot ${ni+1} / ${N}`);
     await sleep(0);
 
-    const div=document.createElement('div');
-    div.className='twod-box';
-    div.innerHTML=`
+    const div = document.createElement('div');
+    div.className = 'twod-box';
+    const pid = `td${n}_${Date.now()}`;
+    div.innerHTML = `
       <div class="twod-header">
-        <div class="twod-title">${n===1?'N=1 — A₁ only':`N=${n} — A₁…A${n}`}</div>
-        <div class="twod-meta">u_max=${umax} &nbsp;|&nbsp; u_min=${umin} &nbsp;|&nbsp; L²err=${l2}</div>
+        <div class="twod-title">${n===1?'N = 1 — A₁ only':`N = ${n} — A₁ … A${n}`}</div>
+        <div class="twod-meta">
+          u_max = ${umax} &nbsp;|&nbsp; u_min = ${umin} &nbsp;|&nbsp; L² error = ${l2}
+          &nbsp;|&nbsp; u_ref_max = ${arrMax(u_ref).toFixed(5)}
+        </div>
       </div>
-      <div class="twod-plot" id="td${n}"></div>`;
+      <div class="twod-plot" id="${pid}"></div>`;
     twodGrid.appendChild(div);
+    activePlotIds.push(pid);
 
-    Plotly.newPlot(`td${n}`,[
-      {x:xpts,y:u_n,mode:'lines',name:`u, N=${n}`,
+    Plotly.newPlot(pid, [
+      {x:xpts, y:u_n, mode:'lines', name:`u, N=${n}`,
        line:{color:'#555',width:1.8},
        hovertemplate:`N=${n}<br>x=%{x:.3f}<br>u=%{y:.6f}<extra></extra>`},
-      {x:xpts,y:u_ref,mode:'lines',name:'reference',
+      {x:xpts, y:u_ref, mode:'lines', name:'reference',
        line:{color:'#1a1a1a',width:1.2,dash:'dash'},
        hovertemplate:`reference<br>x=%{x:.3f}<br>u=%{y:.6f}<extra></extra>`}
-    ],{...PLOTLY_LAYOUT_BASE,
-      xaxis:{title:'x',gridcolor:'#eee',tickfont:{size:9}},
-      yaxis:{title:`u(x,${tval})`,gridcolor:'#eee',tickfont:{size:9}},
+    ], {...BASE,
+      xaxis:{title:'x', range:[0,1], gridcolor:'#eee', tickfont:{size:9}},
+      yaxis:{title:`u(x, ${tval})`, range:yRange, gridcolor:'#eee', tickfont:{size:9}},
       showlegend:false,
-      margin:{t:5,r:10,b:40,l:55}},{responsive:true});
+      margin:{t:5,r:10,b:38,l:60}
+    }, {responsive:true});
   }
 
-  // abs err 2D
-  Plotly.newPlot('abs-err-2d',
-    abserr_all.map((abs,i)=>({
-      x:xpts,y:abs,mode:'lines',name:`N=${N_vals[i]}`,
+  safePlot('abs-err-2d',
+    abserr_all.map((abs,i) => ({
+      x:xpts, y:abs, mode:'lines', name:`N=${N_vals[i]}`,
       line:{color:termColor(i,N),width:1.2},
       hovertemplate:`N=${N_vals[i]}<br>x=%{x:.3f}<br>|err|=%{y:.3e}<extra></extra>`
     })),
-    {...PLOTLY_LAYOUT_BASE,
-     xaxis:{title:'x',gridcolor:'#eee'},
+    {...BASE,
+     xaxis:{title:'x',range:[0,1],gridcolor:'#eee'},
      yaxis:{title:'| u_N(x) − u_ref(x) |',type:'log',gridcolor:'#eee'},
-     margin:{t:10,r:20,b:50,l:70}},{responsive:true});
+     margin:{t:10,r:20,b:50,l:70}});
 
-  // ── 3D TAB ────────────────────────────────────────────────────────────────
-  setProgress(68,'building 3D plots...');
+  // ══════════════════════════════════════════════════════════════════════════
+  // 3D TAB
+  // ══════════════════════════════════════════════════════════════════════════
+  setProgress(66, 'building 3D surface...');
   await sleep(0);
 
   const xs3=linspace(0,L,40), ts3=linspace(0.001,1.0,40);
   const Zfull=ts3.map(t=>xs3.map(x=>uPartial(x,t,An,N,alpha,L)));
-  Plotly.newPlot('sol-plot-3d',[{
-    type:'surface',x:xs3,y:ts3,z:Zfull,colorscale:'Plasma',showscale:true,
+
+  safePlot('sol-plot-3d', [{
+    type:'surface', x:xs3, y:ts3, z:Zfull,
+    colorscale:'Plasma', showscale:true,
     hovertemplate:'x=%{x:.3f}<br>t=%{y:.3f}<br>u=%{z:.5f}<extra></extra>'
-  }],{
+  }], {
     scene:{
-      xaxis:{title:'x',titlefont:{size:10},tickfont:{size:8}},
+      xaxis:{title:'x',range:[0,1],titlefont:{size:10},tickfont:{size:8}},
       yaxis:{title:'t',titlefont:{size:10},tickfont:{size:8}},
       zaxis:{title:'u(x,t)',titlefont:{size:10},tickfont:{size:8}},
       camera:{eye:{x:1.5,y:-1.5,z:1}}
     },
-    paper_bgcolor:'#fff',font:{family:'Courier New',size:10},
+    paper_bgcolor:'#fff', font:{family:'Courier New',size:10},
     margin:{t:10,r:10,b:10,l:10}
-  },{responsive:true});
+  });
 
   // convergence surfaces
   let showNs;
-  if(N<=20) { showNs=Array.from({length:N},(_,i)=>i+1); }
+  if (N<=20) { showNs=Array.from({length:N},(_,i)=>i+1); }
   else { showNs=Array.from({length:20},(_,i)=>N-19+i); }
 
   document.getElementById('threed-grid-desc').textContent =
     `Showing ${showNs.length} surfaces (N=${showNs[0]} to N=${showNs[showNs.length-1]}). ` +
-    (N>20 ? `N>20 so showing the last 20 only — early terms already stabilised. ` : '') +
-    `The L² error and u_max listed under each title are computed over the full x-t domain at t=${tval}.`;
+    (N>20 ? `N>20 so showing the last 20 only — early terms have already stabilised. ` : '') +
+    `u range and L² error shown in each panel header. Rotate by click-drag.`;
 
-  const xs=linspace(0,L,35), ts=linspace(0.001,1.0,35);
-  const grid=document.getElementById('conv-grid');
-  grid.innerHTML='';
+  const xs=linspace(0,L,30), ts=linspace(0.001,1.0,30);
+  const convGrid=document.getElementById('conv-grid');
+  convGrid.innerHTML='';
 
-  for(let si=0;si<showNs.length;si++){
+  for (let si=0; si<showNs.length; si++) {
     const n=showNs[si];
-    setProgress(68+Math.round((si+1)/showNs.length*32),
+    setProgress(66+Math.round((si+1)/showNs.length*34),
       `[tqdm] surface ${si+1} / ${showNs.length}  (N=${n})`);
     await sleep(0);
 
     const Z=ts.map(t=>xs.map(x=>uPartial(x,t,An,n,alpha,L)));
-    const allVals=Z.flat();
-    const zmx=arrMax(allVals).toFixed(4);
-    const zmn=arrMin(allVals).toFixed(4);
-    const l2_n = l2s[N_vals.indexOf(n)] !== undefined
-      ? l2s[N_vals.indexOf(n)].toExponential(3)
-      : '—';
+    const allV=Z.flat();
+    const zmx=arrMax(allV).toFixed(4), zmn=arrMin(allV).toFixed(4);
+    const l2_n = (N_vals.indexOf(n)>=0) ? l2s[N_vals.indexOf(n)].toExponential(3) : '—';
 
     const div=document.createElement('div');
     div.className='surf-box';
+    const pid=`s${n}_${Date.now()}`;
     div.innerHTML=`
       <div class="surf-header">
         <div class="surf-title">${n===1?'N=1 — A₁ only':`N=${n} — A₁…A${n}`}</div>
         <div class="surf-meta">u ∈ [${zmn}, ${zmx}] &nbsp;|&nbsp; L²err(t=${tval}) = ${l2_n}</div>
       </div>
-      <div class="surf-plot" id="s${n}"></div>`;
-    grid.appendChild(div);
+      <div class="surf-plot" id="${pid}"></div>`;
+    convGrid.appendChild(div);
+    activePlotIds.push(pid);
 
-    Plotly.newPlot(`s${n}`,[{
-      type:'surface',x:xs,y:ts,z:Z,colorscale:'Plasma',showscale:false,
+    Plotly.newPlot(pid, [{
+      type:'surface', x:xs, y:ts, z:Z,
+      colorscale:'Plasma', showscale:false,
       hovertemplate:'x=%{x:.2f}<br>t=%{y:.2f}<br>u=%{z:.4f}<extra></extra>'
-    }],{
+    }], {
       scene:{
-        xaxis:{title:'x',titlefont:{size:9},tickfont:{size:8}},
+        xaxis:{title:'x',range:[0,1],titlefont:{size:9},tickfont:{size:8}},
         yaxis:{title:'t',titlefont:{size:9},tickfont:{size:8}},
         zaxis:{title:'u',titlefont:{size:9},tickfont:{size:8}},
         camera:{eye:{x:1.5,y:-1.5,z:1}}
       },
-      paper_bgcolor:'#fff',font:{family:'Courier New',size:9},
+      paper_bgcolor:'#fff', font:{family:'Courier New',size:9},
       margin:{t:5,r:5,b:5,l:5}
-    },{responsive:true});
+    }, {responsive:true});
   }
 
-  setProgress(100,`done — ${N} terms, t=${tval}`);
+  setProgress(100, `done — ${N} terms, t=${tval}`);
   btn.disabled=false;
-}
-
-function N_all_idx(N_vals, N) {
-  const idx=N_vals.indexOf(N); return idx>=0?idx:N_vals.length-1;
 }
 </script>
 </body>
